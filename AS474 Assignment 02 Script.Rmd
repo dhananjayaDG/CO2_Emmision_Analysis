@@ -1,0 +1,138 @@
+---
+title: "AS474 Assignnment 02"
+author: "S/16/342  D.G.M.D.Dimbulkumbura"
+date: "11/21/2021"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+#Read the Dataset
+
+CO2_Emi=read.csv(file="E:/400 Level Sem 1/AS 474/Assignments/A2/AS474 Assignment 02/CO2Emission_LifeExpectancy.csv")
+
+
+#Attach dataset
+
+attach(CO2_Emi)
+
+#Call to tidyerse package
+
+library(tidyverse)
+
+
+#########################################################################
+
+#1. Plot the histogram for life expectancy. Calculate the summary statistics (e.g. mean, median,mode etc.)
+
+ggplot(CO2_Emi, aes(x = LifeExpectancy)) +
+  geom_histogram(col="red",fill="blue") + 
+  labs(title = "Histogram for Life Expectancy",
+       x = "Life Expectancy")
+
+#Getting summary for variable LifeExpectancy
+
+summary(CO2_Emi$LifeExpectancy)
+
+##########################################################################
+
+#2. Plot the bar-plot for the “CO2 emission vs. Country code
+
+ggplot(CO2_Emi, aes(x = Code,y=CO2Emissions)) + 
+  geom_bar(fill = "green", 
+           color="red",stat ='identity') +
+  labs(x = "Country Code", 
+       y = "CO2 Emission", 
+       title = "Bar plot for the CO2 emission vs. Country code")
+
+##########################################################################
+
+#3. Plot the bar-plot for the “Life expectancy vs. Country code”
+
+
+ggplot(CO2_Emi, aes(x = Code,y=LifeExpectancy)) + 
+  geom_bar(fill = "yellow", 
+           color="red",stat ='identity') +
+  labs(x = "Country Code", 
+       y = "Life Expectancy", 
+       title = "Bar plot for the Life expectancy vs. Country code")
+       
+#############################################################################       
+
+
+#4. Plot the box-plot for the “yearly change”. Calculate the summary statistics 
+
+ggplot(CO2_Emi, 
+       aes(x = YearlyChange)) +
+  geom_boxplot() +
+  labs(x="Yearly Challange",title = "Box-plot for Yearly Change")
+  
+  
+  #To get summary statistic
+  
+  summary(CO2_Emi$YearlyChange)
+
+###########################################################################
+
+#5  Plot the stem and leaf-plot for the “yearly change”.
+
+stem(CO2_Emi$YearlyChange)
+
+
+###############################################################################
+
+#6. Plot the correlation-plot for the “Life expectancy vs. CO2 emission”. Find the Person’s and 
+Spearmen’s rank correlation coefficients.
+
+
+ggplot(CO2_Emi, 
+       aes(y = CO2Emissions,x=LifeExpectancy)) +
+  geom_point() +
+  labs(x="Life Expectancy",y="CO2 Emissions",title = "Correlation (Life Expectancy vs. CO2 Emission)")
+
+
+#Pearson corellation coefficient
+
+cor(LifeExpectancy,CO2Emissions, method="pearson")
+
+#Spearman corellation coefficient
+
+cor(LifeExpectancy,CO2Emissions, method="spearman")
+
+###########################################################################
+
+#7. Fit a simple linear regression for the “Life expectancy vs. CO2 emission”. Calculate the two
+#coefficients of the linear regression model. Estimate the life expectancy when CO2 emission is 
+#“20000000000”.
+
+
+linMod=lm(CO2Emissions~LifeExpectancy)
+
+summary(linMod)
+
+###########################################################################
+
+#8. Plot the correlation-plot for “CO2 emission vs. Population”. Find the Person’s correlation 
+coefficients.
+
+
+ggplot(CO2_Emi, 
+       aes(y = CO2Emissions,x=Population)) +
+  geom_point() +
+  labs(x="Population",y="CO2 Emissions",title = "Correlation (CO2 emission vs. Population)")
+
+
+cor(CO2Emissions,Population,method="pearson")
+
+
+############################################################################
+
+#9. Fit the multiple linear regression model for the Life expectancy (Y) and CO2 emission (X2),
+Population (X2). Find the multiple linear regression model coefficients and summary statistics.
+
+
+mulMod=lm(formula =LifeExpectancy~CO2Emissions+Population)
+
+summary(mulMod)
+
+#################################################################################
